@@ -1,0 +1,92 @@
+Question 1
+-----------
+Observe the structure of a given EMPLOYEE table as below and suggest if this table can be further Normalized:
+EMPNO, ENAME, SAL, DEPTNO, DNAME, LOC
+Explain what normal form this table is in and how you can convert it into the next normal form.
+ANSWER:
+-------
+SQL>> CREATE TABLE DEPARTMENT (
+    DEPTNO INT PRIMARY KEY,
+    DNAME VARCHAR(50) NOT NULL,
+    LOC VARCHAR(50)
+);
+
+SQL>> CREATE TABLE EMPLOYEE (
+    EMPNO INT PRIMARY KEY,
+    ENAME VARCHAR(50) NOT NULL,
+    SAL DECIMAL(10, 2),
+    DEPTNO INT,
+    CONSTRAINT fk_employee_dept FOREIGN KEY (DEPTNO) REFERENCES DEPARTMENT(DEPTNO)
+);
+
+Question 2
+-----------
+Observe the structure of a given STUDENT table as below and suggest if this table can be further Normalized:
+ROLLNO, NAME, AGE, EXAM, MARKS, GRADE
+Explain what normal form this table is in and how you can convert it into the next normal form.
+ANSWER:
+-------
+SQL>> CREATE TABLE STUDENT (
+    ROLLNO INT PRIMARY KEY,
+    NAME VARCHAR(50) NOT NULL,
+    AGE INT
+);
+
+SQL>> CREATE TABLE GRADE_SCALE (
+    MARKS INT PRIMARY KEY,
+    GRADE CHAR(2) NOT NULL
+);
+
+SQL>> CREATE TABLE EXAM_RESULT (
+    ROLLNO INT,
+    EXAM VARCHAR(50),
+    MARKS INT,
+    PRIMARY KEY (ROLLNO, EXAM),
+    FOREIGN KEY (ROLLNO) REFERENCES STUDENT(ROLLNO),
+    FOREIGN KEY (MARKS) REFERENCES GRADE_SCALE(MARKS)
+);
+
+Question 3
+-----------
+Observe the structure of a given EMPLOYEE table and suggest what kind of problem this table has and how to solve it:
+EMPNO, PROJECT_NO, NO_OF_DAYS, CUSTOMERNAME
+(Note: EMPNO and PROJECT_NO together form a composite primary key).
+ANSWER:
+--------
+SQL>>CREATE TABLE PROJECT (
+    PROJECT_NO INT PRIMARY KEY,
+    CUSTOMERNAME VARCHAR(100) NOT NULL
+);
+
+SQL>>CREATE TABLE EMPLOYEE_PROJECT (
+    EMPNO INT,
+    PROJECT_NO INT,
+    NO_OF_DAYS INT NOT NULL,
+    PRIMARY KEY (EMPNO, PROJECT_NO),
+    CONSTRAINT fk_emp_proj_project FOREIGN KEY (PROJECT_NO) REFERENCES PROJECT(PROJECT_NO)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
